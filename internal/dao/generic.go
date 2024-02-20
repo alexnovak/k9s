@@ -53,9 +53,9 @@ func (g *Generic) List(ctx context.Context, ns string) ([]runtime.Object, error)
 	}
 
 	if client.IsClusterScoped(ns) {
-		ll, err = dial.List(ctx, metav1.ListOptions{LabelSelector: labelSel})
+        ll, err = dial.List(ctx, metav1.ListOptions{LabelSelector: labelSel, ResourceVersion: "0", ResourceVersionMatch: "NotOlderThan"})
 	} else {
-		ll, err = dial.Namespace(ns).List(ctx, metav1.ListOptions{LabelSelector: labelSel})
+        ll, err = dial.Namespace(ns).List(ctx, metav1.ListOptions{LabelSelector: labelSel, ResourceVersion: "0", ResourceVersionMatch: "NotOlderThan"})
 	}
 	if err != nil {
 		return nil, err

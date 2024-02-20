@@ -59,7 +59,7 @@ func (t *Table) List(ctx context.Context, ns string) ([]runtime.Object, error) {
 		SetHeader("Accept", a).
 		Namespace(ns).
 		Resource(t.gvr.R()).
-		VersionedParams(&metav1.ListOptions{LabelSelector: labelSel}, codec).
+        VersionedParams(&metav1.ListOptions{LabelSelector: labelSel, ResourceVersion: "0", ResourceVersionMatch: "NotOlderThan"}, codec).
 		Do(ctx).Get()
 	if err != nil {
 		return nil, err
